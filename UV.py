@@ -48,7 +48,12 @@ def mainPage():
     with st.form("my_form"):
         country = st.selectbox(
         'Select Country Code',
-        ('us', 'ca'))
+        ('🇺🇸 United States', '🇨🇦 Canada'))
+        match country:
+            case '🇺🇸 United States':
+                country = 'us'
+            case '🇨🇦 Canada':
+                country = 'ca'
         zip_code =  st.text_input(label="ZIP/Postal Code",  disabled=False)
         nomi = pgeocode.Nominatim(country)
         nomi_respository = nomi.query_postal_code(zip_code)
