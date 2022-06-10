@@ -42,7 +42,7 @@ with st.form("my_form"):
 
     submitted = st.form_submit_button("Submit")
 
-    url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid={}".format(lat, long, secret.SECRET)
+    url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid=bae1369f17f11704a9f3fc181dbba78c".format(lat, long)
     payload={}
     headers = {}
     response = re.request("GET", url, headers=headers, data=payload)
