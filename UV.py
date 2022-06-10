@@ -10,7 +10,7 @@ import pgeocode
 
 
 def determineSkinType(): 
-    st.title('determine ')
+    st.title('Determine Skin Type')
     with st.form("skin_type"):
         skin = st.selectbox(
         'Select skin color',
@@ -100,7 +100,13 @@ page_names_to_funcs = {
     "Main Page": mainPage,
     "Skin Type Test": determineSkinType,
     
+    
 }
+
+
+
+
+
 
 demo_name = st.sidebar.selectbox("Choose a page", page_names_to_funcs.keys())
 page_names_to_funcs[demo_name]()
