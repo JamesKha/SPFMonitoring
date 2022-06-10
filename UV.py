@@ -5,7 +5,7 @@ import numpy as np
 import requests as re
 import json
 import pgeocode
-
+import time 
 
 
 
@@ -95,6 +95,16 @@ def mainPage():
             st.write("Lat:", lat, "Long:", long)
             data = pd.json_normalize(json.loads(response.text))
             st.write("Current UVI", data['current.uvi'][0])
+            
+            
+            timer = st.empty()
+            if isinstance(duration, int):
+                secs = duration * 60
+                for exposureTime in range(secs, -1, -1):
+                    formatTime = time.strftime("%M:%S", time.gmtime(exposureTime))
+                    timer.metric("UV Exposure Timer", formatTime)
+                    time.sleep(1)
+                st.warning("Timer has expired!")
 
 page_names_to_funcs = {
     "Main Page": mainPage,
