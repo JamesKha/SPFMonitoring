@@ -89,12 +89,23 @@ def mainPage():
         headers = {}
         response = re.request("GET", url, headers=headers, data=payload)
 
+
+
+
+        placeURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?location={},{}&query=beaches&key=AIzaSyAo2WOjDFJ0ELSeSblfu1cfXHnpo9u0st8".format(lat, long)
+        payload={}
+        headers = {}
+        placeResponse = re.request("GET", placeURL, headers=headers, data=payload)
+
         if submitted:
             st.write("Skin Type:", option)
             st.write("You may stay outside for {} minutes".format(duration))
             st.write("Lat:", lat, "Long:", long)
             data = pd.json_normalize(json.loads(response.text))
+            placeData= pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
+            st.write("Recommended Beaches: ")
+            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']])
             
             
             timer = st.empty()
