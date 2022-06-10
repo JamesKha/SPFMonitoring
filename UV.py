@@ -5,6 +5,7 @@ import numpy as np
 import requests as re
 import json
 import pgeocode
+import time
 
 st.title('Testing')
 
@@ -12,7 +13,7 @@ with st.form("my_form"):
     country = st.selectbox(
     'Select Country Code',
     ('us', 'ca'))
-    
+
     zip_code =  st.text_input(label="ZIP/Postal Code",  disabled=False)
 
 
@@ -20,20 +21,20 @@ with st.form("my_form"):
     nomi_respository = nomi.query_postal_code(zip_code)
 
     lat, long = nomi_respository['latitude'],nomi_respository['longitude']
-    
+
 
     option = st.selectbox(
         'Select Skin Type',
         ('I', 'II', 'III', "IV", "V", "VI"))
 
 
-    if option == "I": 
+    if option == "I":
         duration = 10
-    elif option == "II": 
-        duration = 20 
-    elif option == "III": 
-        duration = 30 
-    elif option == "IV": 
+    elif option == "II":
+        duration = 20
+    elif option == "III":
+        duration = 30
+    elif option == "IV":
         duration = 50
     else:
         duration = "More than 60"
@@ -51,3 +52,12 @@ with st.form("my_form"):
         st.write("Lat:", lat, "Long:", long)
         data = pd.json_normalize(json.loads(response.text))
         st.write("Current UVI", data['current.uvi'][0])
+
+        timer = st.empty()
+        if isinstance(duration, int):
+            secs = duration * 60
+            for exposureTime in range(secs, -1, -1):
+                formatTime = time.strftime("%M:%S", time.gmtime(exposureTime))
+                timer.metric("UV Exposure Timer", formatTime)
+                time.sleep(1)
+            st.warning("Timer has expired!")
