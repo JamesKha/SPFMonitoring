@@ -88,7 +88,11 @@ def mainPage():
             placeData= pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
             st.write("Recommended Beaches: ")
+
             st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
+
+            
+
             timer = st.empty()
             if isinstance(duration, int):
                 secs = duration * 60
