@@ -2,11 +2,9 @@ from pyrsistent import s
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pgeocode
 import requests as re
-import secret 
 import json
-
+import pgeocode
 
 st.title('Testing')
 
