@@ -72,11 +72,12 @@ def mainPage():
         else:
             duration = "More than 60"
         submitted = st.form_submit_button("Submit")
-        url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid=bae1369f17f11704a9f3fc181dbba78c".format(lat, long)
+
+        url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid={}".format(lat, long, st.secrets["weather_key"])
         payload={}
         headers = {}
         response = re.request("GET", url, headers=headers, data=payload)
-        placeURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?location={},{}&query=beaches&key=AIzaSyAo2WOjDFJ0ELSeSblfu1cfXHnpo9u0st8".format(lat, long)
+        placeURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?location={},{}&query=beaches&key={}".format(lat, long, st.secrets["google_key"])
         payload={}
         headers = {}
         placeResponse = re.request("GET", placeURL, headers=headers, data=payload)
