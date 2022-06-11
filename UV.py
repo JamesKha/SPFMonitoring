@@ -99,9 +99,9 @@ def mainPage():
             data = pd.json_normalize(json.loads(response.text))
             placeData = pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
+            strCol = pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20].str[0] ).photo_reference.apply(lambda x: st.image('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=' + str(x) + '&key=' + st.secrets["google_key"]))
             st.write("Recommended Beaches: ")
-            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']],pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20].str[0] ).photo_reference.apply(lambda x: st.image('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=' + str(x) + '&key=' + st.secrets["google_key"]))
-
+            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']],strCol)
             mapData = {
                 'name': [],
                 'lat': [],
