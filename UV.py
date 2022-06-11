@@ -73,7 +73,7 @@ def sunscreenSearch():
             case "Up to 9 SPF": 
                 spfValue = "p_n_feature_nine_browse-bin/7506459011"
             case "10 to 29 SPF": 
-                spfValue = "p_n_feature_nine_browse-bin/75064600111"
+                spfValue = "p_n_feature_nine_browse-bin/7506460011"
             case "30 to 49 SPF": 
                 spfValue = "p_n_feature_nine_browse-bin/7506461011"
             case "50 to 69 SPF": 
