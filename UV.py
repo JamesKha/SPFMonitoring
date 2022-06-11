@@ -51,7 +51,7 @@ def determineSkinType():
 def sunscreenSearch(): 
     st.title('Search based on location')
     with st.form('sunscreeenSearch'): 
-
+        spfValue = ""
 
 
         country = st.selectbox(
@@ -62,36 +62,43 @@ def sunscreenSearch():
                 country = 'us'
             case '🇨🇦 Canada':
                 country = 'ca'
-        
-        SPFRating = st.selectbox(
-        'Select SPFRating',
-        ("Up to 9 SPF", "10 to 29 SPF", "30 to 49 SPF", "50 to 69 SPF", "70+ SPF"))
+
+        itemToBeSearched = st.selectbox('Choose item to be searched', ("Sunscreen", "Beach Towel"))
+        query = st.form_submit_button("Query")
+        if query:
+            if itemToBeSearched == "Sunscreen":
+                SPFRating = st.selectbox(
+                'Select SPFRating',
+                ("Up to 9 SPF", "10 to 29 SPF", "30 to 49 SPF", "50 to 69 SPF", "70+ SPF"))
+                match SPFRating:
+                    case "Up to 9 SPF": 
+                        spfValue = "p_n_feature_nine_browse-bin/7506459011"
+                    case "10 to 29 SPF": 
+                        spfValue = "p_n_feature_nine_browse-bin/7506460011"
+                    case "30 to 49 SPF": 
+                        spfValue = "p_n_feature_nine_browse-bin/7506461011"
+                    case "50 to 69 SPF": 
+                        spfValue = "p_n_feature_nine_browse-bin/7506462011"
+                    case _:
+                        spfValue = "p_n_feature_nine_browse-bin/7506463011"
+            elif itemToBeSearched == "Beach Towel":
+                spfValue = ""
+            else:
+                pass
+
         submitted = st.form_submit_button("Submit")
-
-
-        match SPFRating:
-            case "Up to 9 SPF": 
-                spfValue = "p_n_feature_nine_browse-bin/7506459011"
-            case "10 to 29 SPF": 
-                spfValue = "p_n_feature_nine_browse-bin/7506460011"
-            case "30 to 49 SPF": 
-                spfValue = "p_n_feature_nine_browse-bin/7506461011"
-            case "50 to 69 SPF": 
-                spfValue = "p_n_feature_nine_browse-bin/7506462011"
-            case _:
-                spfValue = "p_n_feature_nine_browse-bin/7506463011"
 
         if country == 'ca':
             countryDomain = ".ca"
         else:
             countryDomain = ".com"
-    if submitted:
-        url = "https://api.rainforestapi.com/request?api_key={}&type=search&amazon_domain=amazon{}&search_term=sunscreen&refinements={}".format(st.secrets["rainforest_key"], countryDomain , spfValue)
-        payload={}
-        headers = {}
-        response = re.request("GET", url, headers=headers, data=payload)
-        data = pd.json_normalize(json.loads(response.text))
-        st.write(pd.json_normalize(data['search_results'][0])[['title', 'link']])
+        if submitted:
+            url = "https://api.rainforestapi.com/request?api_key={}&type=search&amazon_domain=amazon{}&search_term={}&refinements={}".format("2F733D9AFB5E43B1888D801B1D2708CE", countryDomain, itemToBeSearched, spfValue)
+            payload={}
+            headers = {}
+            response = re.request("GET", url, headers=headers, data=payload)
+            data = pd.json_normalize(json.loads(response.text))
+            st.write(pd.json_normalize(data['search_results'][0])[['title', 'link']])
 
 
 
