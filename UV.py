@@ -155,7 +155,7 @@ def mainPage():
             st.write("Recommended Beaches: ")
 
             st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(
-                pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
+                pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20].str[0] ).photo_reference.apply(lambda x: 'https://maps.googleapis.com/maps/api/place/photo?photo_reference=' + str(x) + '&key=' + st.secrets['google_key'])))
 
             mapData = {
                 'name': [],
