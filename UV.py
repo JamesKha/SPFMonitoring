@@ -157,6 +157,19 @@ def mainPage():
             st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(
                 pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
 
+            mapData = {
+                'name': [],
+                'lat': [],
+                'lon': []
+            }
+            for each in placeData['results'][0]:
+                mapData['name'].append(each['name'])
+                mapData['lat'].append(each['geometry']['location']['lat'])
+                mapData['lon'].append(each['geometry']['location']['lng'])
+            st.write("Map of nearby beaches:")
+            df = pd.DataFrame(mapData)
+            st.map(df)
+
             timer = st.empty()
             if isinstance(duration, int):
                 secs = duration * 60
