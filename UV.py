@@ -152,11 +152,10 @@ def mainPage():
             data = pd.json_normalize(json.loads(response.text))
             placeData = pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
-<<<<<<< HEAD
+
             strCol = pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20].str[0] ).photo_reference.apply(lambda x: 'https://maps.googleapis.com/maps/api/place/photo?photo_reference=' + str(x))
-=======
-            strCol = pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20].str[0] ).photo_reference.apply(lambda x: 'https://maps.googleapis.com/maps/api/place/photo?photo_reference=' + str(x) + '&key=' + st.secrets["google_key"])
->>>>>>> b12c3513364ec949e94bfb52898e50f566aa324a
+
+           
             st.write("Recommended Beaches: ")
             st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']],
             strCol)
