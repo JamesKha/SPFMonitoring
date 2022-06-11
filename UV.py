@@ -91,7 +91,7 @@ def sunscreenSearch():
         headers = {}
         response = re.request("GET", url, headers=headers, data=payload)
         data = pd.json_normalize(json.loads(response.text))
-        st.write(pd.json_normalize(data['search_results'][0])['title'])
+        st.write(pd.json_normalize(data['search_results'][0])[['title', 'link']])
 
 
 
