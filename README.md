@@ -4,4 +4,4 @@ An app for planning a beach day made with Python and Streamlit. This app allows 
 
 ![Screenshot of main page with map]()
 
-![Screenshot of skin type page](skintype.jpg)
+![Screenshot of skin type page](./screenshots/skintype.jpg)
