@@ -86,7 +86,7 @@ def sunscreenSearch():
         else:
             countryDomain = ".com"
     if submitted:
-        url = "https://api.rainforestapi.com/request?api_key={}&type=search&amazon_domain=amazon.com&search_term=sunscreen&refinements={}".format(st.secrets["rainforest_key"], countryDomain , spfValue)
+        url = "https://api.rainforestapi.com/request?api_key={}&type=search&amazon_domain=amazon{}&search_term=sunscreen&refinements={}".format(st.secrets["rainforest_key"], countryDomain , spfValue)
         payload={}
         headers = {}
         response = re.request("GET", url, headers=headers, data=payload)
