@@ -21,25 +21,29 @@ def determineSkinType():
         ("blue","gray",  "brown", "dark brown" ))
         submitted = st.form_submit_button("Submit")
 
-        if skin == "very light":
-            type = "I"
-        if skin == "light":
-            if hair == "blond":
-                type = "II"
-            else:
-                type = "II or III"
-        elif skin == "light brown":
-            if hair == "dark blond" or hair == "brown":
-                type = "III"
-            else:
+        type = 'V'
+        match skin:
+            case "very light":
+                type = "I"
+            case "light":
+                if (eyeColor == "gray") or (eyeColor == "brown"):
+                    type = "III"
+                else:
+                    type = "II"
+            case "light brown":
+                if (hair in ["dark brown", "black"]):
+                    type = "IV"
+                else:
+                    type = "III"
+            case "olive-colored":
                 type = "IV"
-        elif skin == "olive":
-            type = "IV"
-        elif skin == "dark brown":
-            if hair == "dark brown" or hair == "black":
-                type = "V or VI"
-        else:
-            type = "VI"
+            case "dark brown":
+                if (hair == "black") and (eyeColor == "dark brown"):
+                    type = "V"
+            case "black":
+                type = "VI"
+            case _:
+                type = "V"
         if submitted:
             st.write("Skin Type:", type)
 
