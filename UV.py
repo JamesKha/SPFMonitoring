@@ -105,7 +105,7 @@ def sunscreenSearch():
 
 
 def mainPage():
-    st.title('Main Page')
+    st.title('Beach Day Planner')
     with st.form("my_form"):
         country = st.selectbox(
             'Select Country Code',
