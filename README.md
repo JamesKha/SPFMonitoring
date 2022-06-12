@@ -1,3 +1,4 @@
+
 # Beach Day Planner 🏖️
 
 ![language](https://img.shields.io/badge/language-python3.10-yellow?style=plastic&logo=appveyor)
@@ -12,6 +13,6 @@ An app for planning a beach day. Made with Python and Streamlit. This app allows
 
 [Link to live demo](https://share.streamlit.io/jameskha/spfmonitoring/main/UV.py)
 
-![Screenshot of main page with map]()
+![Screenshot of main page with map](./screenshots/mainpage.jpg)
 
 ![Screenshot of skin type page](./screenshots/skintype.jpg)
