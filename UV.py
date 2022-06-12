@@ -112,24 +112,42 @@ def mainPage():
             # location_image(country=country, zip_code=zip_code)
             # st.image(image='./images/000001.jpg')
 
-            st.write(pd.json_normalize(placeData['results'][0])[
-                     ['name', 'formatted_address']])
-            imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
-                placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
-            image = Image.open(re.get(imgURL, stream=True).raw)
-            st.image(image, caption=placeData['results'][0][0]['name'])
-            mapData = {
-                'name': [],
-                'lat': [],
-                'lon': []
-            }
-            for each in placeData['results'][0]:
-                mapData['name'].append(each['name'])
-                mapData['lat'].append(each['geometry']['location']['lat'])
-                mapData['lon'].append(each['geometry']['location']['lng'])
-            st.write("Map of nearby beaches:")
-            df = pd.DataFrame(mapData)
-            st.map(df)
+            # mapping
+            import folium
+            import streamlit_folium as stf
+
+            names = pd.json_normalize(placeData['results'][0])['name'].tolist()
+            lat_list = pd.json_normalize(placeData['results'][0])['geometry.location.lat'].tolist()
+            lng_list = pd.json_normalize(placeData['results'][0])['geometry.location.lng'].tolist()
+
+            m = folium.Map(location=np.asarray(a=list([lat, long])), zoom_start=5, tiles='Stamen Terrain')
+            for name, lat, lng in list(zip(names, lat_list, lng_list)):
+                # st.write(location)
+                folium.Marker(
+                    location=[lat, lng],
+                    popup=name,
+                    icon=folium.Icon(color='blue', icon="info-sign"),
+                ).add_to(m)
+            stf.folium_static(fig=m)
+
+            # st.write(pd.json_normalize(placeData['results'][0])[
+            #          ['name', 'formatted_address']])
+            # imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
+            #     placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
+            # image = Image.open(re.get(imgURL, stream=True).raw)
+            # st.image(image, caption=placeData['results'][0][0]['name'])
+            # mapData = {
+            #     'name': [],
+            #     'lat': [],
+            #     'lon': []
+            # }
+            # for each in placeData['results'][0]:
+            #     mapData['name'].append(each['name'])
+            #     mapData['lat'].append(each['geometry']['location']['lat'])
+            #     mapData['lon'].append(each['geometry']['location']['lng'])
+            # st.write("Map of nearby beaches:")
+            # df = pd.DataFrame(mapData)
+            # st.map(df)
 
             timer = st.empty()
             if isinstance(duration, int):
