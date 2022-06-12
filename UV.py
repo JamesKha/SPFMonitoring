@@ -52,7 +52,7 @@ def determineSkinType():
                 type = "V"
         if submitted:
             st.write("Skin Type:", type)
-
+    st.write('Reference: https://www.ncbi.nlm.nih.gov/books/NBK321117/')
 
 def location_image(country: str, zip_code: str):
     nomi = pgeocode.Nominatim(country=country)
@@ -111,7 +111,7 @@ def mainPage():
             st.write("Recommended Beaches: ")
 
 
-            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
+            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']])
             # location_image(country=country, zip_code=zip_code)
             # st.image(image='./images/000001.jpg')
 
@@ -158,7 +158,7 @@ def mainPage():
                     timer.metric("UV Exposure Timer", formatTime)
                     time.sleep(1)
                 st.warning("Timer has expired!")
-
+    st.write('Reference: https://www.ncbi.nlm.nih.gov/books/NBK321117/')
 
 page_names_to_funcs = {
     "Main Page": mainPage,
