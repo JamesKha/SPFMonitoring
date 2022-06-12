@@ -1,4 +1,6 @@
 from pyrsistent import s
+from google_images_download import google_images_download as gid
+from icrawler.builtin import GoogleImageCrawler
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -42,6 +44,13 @@ def determineSkinType():
             type = "VI"
         if submitted:
             st.write("Skin Type:", type)
+
+def location_image(country: str, zip_code: str):
+    nomi = pgeocode.Nominatim(country=country)
+    location = nomi.query_postal_code(zip_code)
+    google_crawler = GoogleImageCrawler(storage={'root_dir': './images/'})
+    google_crawler.crawl(keyword=location['community_name'], max_num=1, overwrite=True)
+
 
 def mainPage():
     st.title('Main Page')
@@ -90,8 +99,8 @@ def mainPage():
             st.write("Recommended Beaches: ")
 
             st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
-
-            
+            # location_image(country=country, zip_code=zip_code)
+            # st.image(image='./images/000001.jpg')
 
             timer = st.empty()
             if isinstance(duration, int):
