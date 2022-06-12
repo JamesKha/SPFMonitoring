@@ -1,3 +1,6 @@
+icrawler
+google_images_download
 pgeocode
 python-dotenv
 streamlit
+streamlit-folium
