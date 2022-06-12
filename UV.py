@@ -130,12 +130,12 @@ def mainPage():
                 ).add_to(m)
             stf.folium_static(fig=m)
 
-            st.write(pd.json_normalize(placeData['results'][0])[
-                     ['name', 'formatted_address']])
+            # display image
             imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
                 placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
             image = Image.open(re.get(imgURL, stream=True).raw)
             st.image(image, caption=placeData['results'][0][0]['name'])
+
             # mapData = {
             #     'name': [],
             #     'lat': [],
