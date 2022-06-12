@@ -102,6 +102,24 @@ def mainPage():
             # location_image(country=country, zip_code=zip_code)
             # st.image(image='./images/000001.jpg')
 
+            # mapping
+            import folium
+            import streamlit_folium as stf
+
+            names = pd.json_normalize(placeData['results'][0])['name'].tolist()
+            lat_list = pd.json_normalize(placeData['results'][0])['geometry.location.lat'].tolist()
+            lng_list = pd.json_normalize(placeData['results'][0])['geometry.location.lng'].tolist()
+
+            m = folium.Map(location=np.asarray(a=list([lat, long])), zoom_start=5, tiles='Stamen Terrain')
+            for name, lat, lng in list(zip(names, lat_list, lng_list)):
+                # st.write(location)
+                folium.Marker(
+                    location=[lat, lng],
+                    popup=name,
+                    icon=folium.Icon(color='blue', icon="info-sign"),
+                ).add_to(m)
+            stf.folium_static(fig=m)
+
             timer = st.empty()
             if isinstance(duration, int):
                 secs = duration * 60
