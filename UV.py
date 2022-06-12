@@ -1,4 +1,6 @@
 from pyrsistent import s
+from google_images_download import google_images_download as gid
+from icrawler.builtin import GoogleImageCrawler
 import streamlit as st
 import pandas as pd
 import requests as re
@@ -49,6 +51,12 @@ def determineSkinType():
             st.write("Skin Type:", type)
 
 
+def location_image(country: str, zip_code: str):
+    nomi = pgeocode.Nominatim(country=country)
+    location = nomi.query_postal_code(zip_code)
+    google_crawler = GoogleImageCrawler(storage={'root_dir': './images/'})
+    google_crawler.crawl(keyword=location['community_name'], max_num=1, overwrite=True)
+
 def mainPage():
     st.title('Beach Day Planner')
     with st.form("my_form"):
@@ -98,6 +106,12 @@ def mainPage():
             placeData = pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
             st.write("Recommended Beaches: ")
+
+
+            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']], pd.json_normalize(pd.json_normalize(placeData['results'][0])['photos'].iloc[1:20]))
+            # location_image(country=country, zip_code=zip_code)
+            # st.image(image='./images/000001.jpg')
+
             st.write(pd.json_normalize(placeData['results'][0])[
                      ['name', 'formatted_address']])
             imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(

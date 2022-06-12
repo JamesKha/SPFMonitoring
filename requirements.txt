@@ -1,5 +1,8 @@
+icrawler
+google_images_download
+pandas
 pgeocode
 python-dotenv
-streamlit
-pandas
 requests
+streamlit
+streamlit-folium
