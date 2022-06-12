@@ -11,7 +11,7 @@ import pgeocode
 import folium
 import time
 from PIL import Image
-
+import numpy as np
 
 def determineSkinType():
     st.title('Determine Skin Type')
