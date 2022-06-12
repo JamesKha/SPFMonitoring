@@ -1,5 +1,6 @@
 icrawler
 google_images_download
+folium
 pgeocode
 python-dotenv
 streamlit
