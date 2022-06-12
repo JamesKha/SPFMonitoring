@@ -1,11 +1,11 @@
 from pyrsistent import s
 import streamlit as st
 import pandas as pd
-import numpy as np
 import requests as re
 import json
 import pgeocode
 import time
+from PIL import Image
 
 
 def determineSkinType():
@@ -47,8 +47,6 @@ def determineSkinType():
                 type = "V"
         if submitted:
             st.write("Skin Type:", type)
-
-
 
 
 def mainPage():
@@ -100,7 +98,12 @@ def mainPage():
             placeData = pd.json_normalize(json.loads(placeResponse.text))
             st.write("Current UVI", data['current.uvi'][0])
             st.write("Recommended Beaches: ")
-            st.write(pd.json_normalize(placeData['results'][0])[['name', 'formatted_address']])
+            st.write(pd.json_normalize(placeData['results'][0])[
+                     ['name', 'formatted_address']])
+            imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
+                placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
+            image = Image.open(re.get(imgURL, stream=True).raw)
+            st.image(image, caption=placeData['results'][0][0]['name'])
             mapData = {
                 'name': [],
                 'lat': [],
