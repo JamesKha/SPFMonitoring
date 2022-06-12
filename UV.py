@@ -2,10 +2,13 @@ from pyrsistent import s
 from google_images_download import google_images_download as gid
 from icrawler.builtin import GoogleImageCrawler
 import streamlit as st
+import streamlit_folium as stf
+import numpy as np
 import pandas as pd
 import requests as re
 import json
 import pgeocode
+import folium
 import time
 from PIL import Image
 
@@ -113,9 +116,6 @@ def mainPage():
             # st.image(image='./images/000001.jpg')
 
             # mapping
-            import folium
-            import streamlit_folium as stf
-
             names = pd.json_normalize(placeData['results'][0])['name'].tolist()
             lat_list = pd.json_normalize(placeData['results'][0])['geometry.location.lat'].tolist()
             lng_list = pd.json_normalize(placeData['results'][0])['geometry.location.lng'].tolist()
@@ -130,12 +130,12 @@ def mainPage():
                 ).add_to(m)
             stf.folium_static(fig=m)
 
-            # st.write(pd.json_normalize(placeData['results'][0])[
-            #          ['name', 'formatted_address']])
-            # imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
-            #     placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
-            # image = Image.open(re.get(imgURL, stream=True).raw)
-            # st.image(image, caption=placeData['results'][0][0]['name'])
+            st.write(pd.json_normalize(placeData['results'][0])[
+                     ['name', 'formatted_address']])
+            imgURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={}&key={}".format(
+                placeData['results'][0][0]['photos'][0]['photo_reference'], st.secrets["google_key"])
+            image = Image.open(re.get(imgURL, stream=True).raw)
+            st.image(image, caption=placeData['results'][0][0]['name'])
             # mapData = {
             #     'name': [],
             #     'lat': [],
